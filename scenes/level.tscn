@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://c8etripyub0tc"]
+
+[ext_resource type="PackedScene" uid="uid://b7fqb1ceiksnq" path="res://scenes/player_puck.tscn" id="1_0hi3e"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2n5ju"]
+size = Vector2(1166, 10)
+
+[node name="Level" type="Node2D"]
+
+[node name="PlayerPuck" parent="." instance=ExtResource("1_0hi3e")]
+position = Vector2(253, 156)
+motion_mode = 1
+
+[node name="BorderTop" type="RigidBody2D" parent="."]
+
+[node name="BorderTop" type="CollisionShape2D" parent="BorderTop"]
+position = Vector2(573, -5)
+shape = SubResource("RectangleShape2D_2n5ju")
+
+[node name="BorderBottom" type="RigidBody2D" parent="."]
+
+[node name="BorderBottom" type="CollisionShape2D" parent="BorderBottom"]
+position = Vector2(582, 653)
+shape = SubResource("RectangleShape2D_2n5ju")

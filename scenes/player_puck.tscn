@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://b7fqb1ceiksnq"]
+
+[ext_resource type="Texture2D" uid="uid://1yddjw7g8nr5" path="res://sprites/block.png" id="1_blbcn"]
+[ext_resource type="Script" path="res://scripts/player_puck.gd" id="1_lo5aw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qtdni"]
+size = Vector2(25, 256)
+
+[node name="PlayerPuck" type="CharacterBody2D"]
+script = ExtResource("1_lo5aw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_qtdni")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.795, 1)
+texture = ExtResource("1_blbcn")
