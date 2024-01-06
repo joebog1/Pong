@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://c0wqold5ye23s"]
+
+[ext_resource type="Script" path="res://scenes/opponent_puck.gd" id="1_gqvel"]
+[ext_resource type="Texture2D" uid="uid://1yddjw7g8nr5" path="res://sprites/block.png" id="2_6oduq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ortnu"]
+size = Vector2(25, 256)
+
+[node name="OpponentPuck" type="CharacterBody2D"]
+script = ExtResource("1_gqvel")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ortnu")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.795, 1)
+texture = ExtResource("2_6oduq")

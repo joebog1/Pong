@@ -1,24 +1,39 @@
-[gd_scene load_steps=3 format=3 uid="uid://c8etripyub0tc"]
+[gd_scene load_steps=7 format=3 uid="uid://c8etripyub0tc"]
 
 [ext_resource type="PackedScene" uid="uid://b7fqb1ceiksnq" path="res://scenes/player_puck.tscn" id="1_0hi3e"]
+[ext_resource type="Script" path="res://scenes/level.gd" id="1_bdhl3"]
+[ext_resource type="PackedScene" uid="uid://c0wqold5ye23s" path="res://scenes/opponent_puck.tscn" id="2_vhd1g"]
+[ext_resource type="PackedScene" uid="uid://hf0o5ela3mrw" path="res://scenes/ball.tscn" id="3_neeh0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2n5ju"]
-size = Vector2(1166, 10)
+size = Vector2(1166, 162)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xfhdh"]
+size = Vector2(1156, 224)
 
 [node name="Level" type="Node2D"]
+script = ExtResource("1_bdhl3")
 
-[node name="PlayerPuck" parent="." instance=ExtResource("1_0hi3e")]
-position = Vector2(253, 156)
-motion_mode = 1
-
-[node name="BorderTop" type="RigidBody2D" parent="."]
+[node name="BorderTop" type="StaticBody2D" parent="."]
 
 [node name="BorderTop" type="CollisionShape2D" parent="BorderTop"]
-position = Vector2(573, -5)
+position = Vector2(573, -81)
 shape = SubResource("RectangleShape2D_2n5ju")
 
-[node name="BorderBottom" type="RigidBody2D" parent="."]
+[node name="BorderBottom" type="StaticBody2D" parent="."]
 
-[node name="BorderBottom" type="CollisionShape2D" parent="BorderBottom"]
-position = Vector2(582, 653)
-shape = SubResource("RectangleShape2D_2n5ju")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BorderBottom"]
+position = Vector2(575, 762)
+shape = SubResource("RectangleShape2D_xfhdh")
+
+[node name="PlayerPuck" parent="." instance=ExtResource("1_0hi3e")]
+position = Vector2(50, 286)
+motion_mode = 1
+
+[node name="OpponentPuck" parent="." instance=ExtResource("2_vhd1g")]
+position = Vector2(1090, 270)
+
+[node name="Ball" parent="." instance=ExtResource("3_neeh0")]
+position = Vector2(584, 250)
+
+[connection signal="body_entered" from="Ball" to="." method="_on_ball_body_entered"]
