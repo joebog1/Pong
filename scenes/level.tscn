@@ -15,23 +15,30 @@ size = Vector2(1156, 224)
 script = ExtResource("1_bdhl3")
 
 [node name="BorderTop" type="StaticBody2D" parent="."]
+editor_description = "Wall"
 
 [node name="BorderTop" type="CollisionShape2D" parent="BorderTop"]
 position = Vector2(573, -81)
 shape = SubResource("RectangleShape2D_2n5ju")
 
 [node name="BorderBottom" type="StaticBody2D" parent="."]
+editor_description = "Wall"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BorderBottom"]
 position = Vector2(575, 762)
 shape = SubResource("RectangleShape2D_xfhdh")
 
 [node name="PlayerPuck" parent="." instance=ExtResource("1_0hi3e")]
-position = Vector2(50, 286)
+editor_description = "Puck"
+position = Vector2(50, 250)
 motion_mode = 1
+platform_on_leave = 2
 
 [node name="OpponentPuck" parent="." instance=ExtResource("2_vhd1g")]
-position = Vector2(1090, 270)
+editor_description = "Puck"
+position = Vector2(1090, 250)
+motion_mode = 1
+platform_on_leave = 2
 
 [node name="Ball" parent="." instance=ExtResource("3_neeh0")]
 position = Vector2(584, 250)

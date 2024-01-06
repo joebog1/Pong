@@ -2,34 +2,55 @@ extends Node2D
 
 const INITAL_BALL_SPEED = 400
 
-func _determine_new_ball_velocity(body):
-	# The new angle of the ball is not detemrined by the previous angular 
-	# velocity. It is entierly based off of the offeset between the ball and 
-	# the puck
-	#
-	#                         ^ <- New angle
-	#                          \  ______
-	#                           \ |    |
-	#  Centre of ball    ->      *|    |
-	#                             |\   |
-	#                             |  * | <- Centre of puck
-	#                             |    |
-	#                             |    |
-	#                             |    |
-	#                             ------
+func _determine_new_ball_velocity(body, ball) -> Vector2:
 	
-	var centre_of_puck = body.get_global_position()
-	
-	var centre_of_ball = $Ball.get_global_position()
-	print("puck: " + str(centre_of_puck) + 
-		  " \nball: " + str(centre_of_ball) + "\n")
-	# Determine the y difference and calulate a normalised vector from the 
-	# result.
-	var difference_vector = centre_of_ball - centre_of_puck
-	var result = difference_vector.normalized() * INITAL_BALL_SPEED
-	print("result: " + str(result) + "\n")
-	return result
-
+	# :HACK: Using the editor description of nodes to do control flow is 
+	# extremely jank. Find a better way to determine if the body being collied 
+	# with is a wall or not paddel. if there is some functionality to determine
+	# which type a node is this will be sufficent.
+	if(body.get_editor_description() == "Wall"):
+		# The new angle of the ball is the same as the previous angle but in the
+		# opposite direction. This is equlivant to fliping the signage on the y 
+		# value in the vector
+		#                             in        ^ out
+		#                              \       /
+		#                               \     /
+		#                                \   /
+		#                      Angle A     *      Angle A
+		#      -----------------------------------------------------------
+		
+		var result = ball.get_linear_velocity()
+		result.y *= -1
+		return result
+		
+	else:
+		# The new angle of the ball is not detemrined by the previous angular 
+		# velocity when the player hits the ball. It is entierly based off of 
+		# the offeset between the ball and the puck
+		#
+		#                         ^ <- New vector (-1/sqrt(2), -1/sqrt(2)) * SPEED
+		#                          \  ______
+		#                           \ |    |
+		#  Centre of ball    ->      *|    | <- Lets say that the ball is at (-1,-1)
+		#                             |\   |
+		#                             |  * | <- Centre of puck (0,0) for example
+		#                             |    |
+		#                             |    |
+		#                             |    |
+		#                             ------
+		assert(body.get_editor_description() == "Puck")
+		var centre_of_puck = body.get_global_position()
+		var centre_of_ball = $Ball.get_global_position()
+		print("puck: " + str(centre_of_puck) + 
+			  " \nball: " + str(centre_of_ball) + "\n")
+			
+		# Determine the y difference and calulate a normalised vector from the 
+		# result.
+		var difference_vector = centre_of_ball - centre_of_puck
+		var result = difference_vector.normalized() * INITAL_BALL_SPEED
+		print("new ball velocity: " + str(result) + "\n")
+		return result
+		
 func _ready():
 	
 	# Santity check: Ensure that both pucks are the same size.
@@ -44,4 +65,4 @@ func _ready():
 func _on_ball_body_entered(body):
 	# :TODO: Do maths here to determine the new body velocity.
 	print(str($Ball.get_linear_velocity()))
-	$Ball.set_linear_velocity(_determine_new_ball_velocity(body))
+	$Ball.set_linear_velocity(_determine_new_ball_velocity(body, $Ball))
