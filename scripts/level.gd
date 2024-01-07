@@ -86,6 +86,7 @@ func _ready():
 	# was done instead of setting it directly here. Seems to work though 
 	# currently.
 	$Ball.set_linear_velocity(previous_ball_velocity)
+	$Ball/Timer.one_shot = true
 	inital_ball_position = $Ball.get_global_position()
 
 func _process(_delta):
@@ -111,7 +112,11 @@ func determine_new_ball_velocity():
 		return Vector2(INITAL_BALL_SPEED, 0)
 
 func reset_ball_state(new_velocity:Vector2):
-	$Ball.set_global_position(inital_ball_position)
+	# :HACK: Calling set_global_position immidentally causes the ball to 
+	# disappear for some reason. The old 0 second timer solves the issue. 
+	# I shouldn't need to do this (setting it to 0.1 makes the ball appear 
+	# faster??)
+	$Ball/Timer.start(0)
 	
 	# We should ensure that the new ball speed is the same as the inital speed.
 	assert(new_velocity.length() == INITAL_BALL_SPEED)
@@ -119,8 +124,7 @@ func reset_ball_state(new_velocity:Vector2):
 	# Velocity of the ball is determined by the direction it was moving at the 
 	# time of reset.
 	$Ball.set_linear_velocity(new_velocity)
-
-
+	
 # :TODO: The following slots have duplicated code. Find a way to collate them 
 # into a base class which handles this automatically. 
 func _on_opponent_goal_body_entered(_area):
@@ -138,3 +142,7 @@ func _on_player_goal_body_entered(_area):
 	print(inital_ball_position)
 	$PlayerGoal/Label.set_text(str(old_score + 1))
 	reset_ball_state(determine_new_ball_velocity())
+
+
+func _on_timer_timeout():
+	$Ball.set_global_position(inital_ball_position)

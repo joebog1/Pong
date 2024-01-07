@@ -14,15 +14,14 @@ size = Vector2(1151, 224)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vgtqa"]
 size = Vector2(20, 349.25)
 
-[sub_resource type="LabelSettings" id="LabelSettings_h7khf"]
-font_size = 32
+[sub_resource type="LabelSettings" id="LabelSettings_qw35m"]
 font_color = Color(0, 0, 0, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dtw2u"]
 size = Vector2(58.5, 705)
 
 [sub_resource type="LabelSettings" id="LabelSettings_shic8"]
-font_size = 64
+font_size = 32
 font_color = Color(0, 0, 0, 1)
 
 [node name="Level" type="Node2D"]
@@ -61,12 +60,12 @@ position = Vector2(-10.5, 163.75)
 shape = SubResource("RectangleShape2D_vgtqa")
 
 [node name="Label" type="Label" parent="PlayerGoal"]
-offset_left = 427.0
-offset_top = 22.0
-offset_right = 534.0
-offset_bottom = 67.0
+offset_left = 439.0
+offset_top = 23.5
+offset_right = 479.0
+offset_bottom = 46.5
 text = "0"
-label_settings = SubResource("LabelSettings_h7khf")
+label_settings = SubResource("LabelSettings_qw35m")
 
 [node name="OpponentGoal" type="Area2D" parent="."]
 
@@ -85,6 +84,9 @@ label_settings = SubResource("LabelSettings_shic8")
 [node name="Ball" parent="." instance=ExtResource("3_neeh0")]
 position = Vector2(584, 325)
 
+[node name="Timer" type="Timer" parent="Ball"]
+
 [connection signal="body_entered" from="PlayerGoal" to="." method="_on_player_goal_body_entered"]
 [connection signal="body_entered" from="OpponentGoal" to="." method="_on_opponent_goal_body_entered"]
 [connection signal="body_entered" from="Ball" to="." method="_on_ball_body_entered"]
+[connection signal="timeout" from="Ball/Timer" to="." method="_on_timer_timeout"]

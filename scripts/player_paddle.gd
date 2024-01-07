@@ -6,6 +6,11 @@ extends CharacterBody2D
 const BASE_SPEED = 200.0
 # Enum represents the direction the Runner is facing.
 
+var inital_x_position: float
+
+func _ready():
+	inital_x_position = get_global_position().x
+
 func _physics_process(_delta):
 	
 	# :TODO: Find a way of doing this that doesn't rely on getting input for x 
@@ -20,6 +25,11 @@ func _physics_process(_delta):
 	
 	# Paddles do not move to the left or right.
 	velocity.x = 0;
+	
+	# :HACK: The paddle keeps getting pushed back on collision. This attempts to
+	# Fix that issue by enforcing the x coordinate stays the same each 
+	# iteration.
+	set_global_position(Vector2(inital_x_position, get_global_position().y))
 	
 	# :NOTE:
 	# delta is automatically incorporated in move_and_slide.
