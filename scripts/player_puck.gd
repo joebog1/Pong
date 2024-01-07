@@ -1,9 +1,5 @@
 extends CharacterBody2D
 
-# :NOTE: I've called these Paddles. That's probably not the right word for it. In 
-# air hockey (or just hockey in general) the paddle is what I have called the 
-# ball. Consider a rename in the future.
-
 const BASE_SPEED = 300.0
 # Enum represents the direction the Runner is facing.
 
