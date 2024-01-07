@@ -95,3 +95,16 @@ func _process(_delta):
 	
 func _on_ball_body_entered(body):
 	$Ball.set_linear_velocity(_determine_new_ball_velocity(body, $Ball))
+
+# :TODO: The following signals have duplicated code. Find a way to collate them 
+# into a base class which handles this automatically. 
+
+func _on_opponent_goal_area_entered(area):
+	#:TODO: Find a way of updating the goal without relying on the level scene's
+	# knowledge of the node from the context that this method was called.
+	$OpponentGoal/Label.set_text(int($OpponentGoal/Label.get_text()) + 1) 
+
+func _on_player_goal_area_entered(area):
+	#:TODO: Find a way of updating the goal without relying on the level scene's
+	# knowledge of the node from the context that this method was called.
+	$PlayerGoal/Label.set_text(int($PlayerGoal/Label.get_text()) + 1)

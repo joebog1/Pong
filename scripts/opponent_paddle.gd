@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 # TODO change based off of setting.
-const SPEED = 200.0
+const SPEED = 240.0
 
 # This function applies the movement to the paddle based off of the direction 
 # provided with magnitude SPEED.
