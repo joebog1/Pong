@@ -63,14 +63,11 @@ func _determine_new_ball_velocity(body, ball) -> Vector2:
 		assert(body.get_editor_description() == "Paddle")
 		var centre_of_puck = body.get_global_position()
 		var centre_of_ball = ball.get_global_position()
-		print("paddle: " + str(centre_of_puck) + 
-			  " \nball: " + str(centre_of_ball) + "\n")
 			
 		# Determine the y difference and calulate a normalised vector from the 
 		# result.
 		var difference_vector = centre_of_ball - centre_of_puck
 		var result = difference_vector.normalized() * INITAL_BALL_SPEED
-		print("new ball velocity: " + str(result) + "\n")
 		previous_ball_velocity = result
 		return result
 		
@@ -92,11 +89,9 @@ func _process(_delta):
 	if(new_direction.length_squared() == 0):
 		return
 		
-	# :TODO: Should this be done with signals? hard to determine what is "right"
-	# in this context at the moment. Consult style guide
+	# :TODO: Should this be done with signals? Hard to determine what is "right"
+	# in this context at the moment. Consult a style guide.
 	$OpponentPaddle.apply_movement(new_direction)
 	
 func _on_ball_body_entered(body):
-	print("Inital ball velocity: " + str($Ball.get_linear_velocity()) + "\n")
 	$Ball.set_linear_velocity(_determine_new_ball_velocity(body, $Ball))
-

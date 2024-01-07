@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://c8etripyub0tc"]
+[gd_scene load_steps=11 format=3 uid="uid://c8etripyub0tc"]
 
 [ext_resource type="PackedScene" uid="uid://b7fqb1ceiksnq" path="res://scenes/player_puck.tscn" id="1_0hi3e"]
 [ext_resource type="Script" path="res://scripts/level.gd" id="1_bdhl3"]
@@ -10,6 +10,20 @@ size = Vector2(1166, 162)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xfhdh"]
 size = Vector2(1156, 224)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vgtqa"]
+size = Vector2(20, 349.25)
+
+[sub_resource type="LabelSettings" id="LabelSettings_dxxj8"]
+font_size = 32
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dtw2u"]
+size = Vector2(58.5, 705)
+
+[sub_resource type="LabelSettings" id="LabelSettings_shic8"]
+font_size = 64
+font_color = Color(0, 0, 0, 1)
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_bdhl3")
@@ -41,5 +55,34 @@ platform_on_leave = 2
 
 [node name="Ball" parent="." instance=ExtResource("3_neeh0")]
 position = Vector2(584, 250)
+
+[node name="PlayerGoal" type="Area2D" parent="."]
+scale = Vector2(2, 2)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerGoal"]
+position = Vector2(-10.5, 163.75)
+shape = SubResource("RectangleShape2D_vgtqa")
+
+[node name="Label" type="Label" parent="PlayerGoal"]
+offset_left = 386.0
+offset_top = 23.0
+offset_right = 489.0
+offset_bottom = 69.0
+text = "0"
+label_settings = SubResource("LabelSettings_dxxj8")
+
+[node name="OpponentGoal" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OpponentGoal"]
+position = Vector2(1184.75, 329)
+shape = SubResource("RectangleShape2D_dtw2u")
+
+[node name="Label" type="Label" parent="OpponentGoal"]
+offset_left = 215.0
+offset_top = 43.0
+offset_right = 497.0
+offset_bottom = 165.0
+text = "0"
+label_settings = SubResource("LabelSettings_shic8")
 
 [connection signal="body_entered" from="Ball" to="." method="_on_ball_body_entered"]

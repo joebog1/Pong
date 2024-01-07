@@ -4,15 +4,17 @@
 [ext_resource type="Script" path="res://scripts/player_puck.gd" id="1_lo5aw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qtdni"]
-size = Vector2(25, 256)
+size = Vector2(12.7, 128)
 
 [node name="PlayerPaddle" type="CharacterBody2D"]
 motion_mode = 1
 script = ExtResource("1_lo5aw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_qtdni")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.795, 1)
+position = Vector2(0, 0.5)
+scale = Vector2(0.396, 0.5)
 texture = ExtResource("1_blbcn")
