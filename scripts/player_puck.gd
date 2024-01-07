@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
-# :NOTE: I've called these pucks. That's probably not the right word for it. In 
-# air hockey (or just hockey in general) the puck is what I have called the 
+# :NOTE: I've called these Paddles. That's probably not the right word for it. In 
+# air hockey (or just hockey in general) the paddle is what I have called the 
 # ball. Consider a rename in the future.
 
 const BASE_SPEED = 300.0
@@ -19,7 +19,7 @@ func _physics_process(_delta):
 	# -BASE_SPEED depending on the current value.
 	velocity = Input.get_vector("ui_left","ui_right", "up", "down") * BASE_SPEED
 	
-	# Pucks do not move to the left or right.
+	# Paddles do not move to the left or right.
 	velocity.x = 0;
 	
 	# :NOTE:

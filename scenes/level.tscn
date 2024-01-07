@@ -29,13 +29,12 @@ position = Vector2(575, 762)
 shape = SubResource("RectangleShape2D_xfhdh")
 
 [node name="PlayerPuck" parent="." instance=ExtResource("1_0hi3e")]
-editor_description = "Puck"
+editor_description = "Paddle"
 position = Vector2(50, 250)
-motion_mode = 1
 platform_on_leave = 2
 
 [node name="OpponentPuck" parent="." instance=ExtResource("2_vhd1g")]
-editor_description = "Puck"
+editor_description = "Paddle"
 position = Vector2(1090, 250)
 motion_mode = 1
 platform_on_leave = 2
