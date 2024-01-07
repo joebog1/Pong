@@ -9,16 +9,12 @@ const INITAL_BALL_SPEED = 400
 # returned.
 func determine_movement_direction():
 	# Take the current y positions of the Ball and OpponentPaddle
-	var resulting_direction: Vector2 =                                         \
-	Vector2(0,                                                                 \
-			$Ball.get_global_position().y >                                    \
-			$OpponentPaddle.get_global_position().y)
+	var ball_y_position = $Ball.get_global_position().y
+	var paddle_y_position = $OpponentPaddle.get_global_position().y
+	if(ball_y_position == paddle_y_position): return Vector2(0,0)
 	
-	assert(resulting_direction.x == 0)
-	# Since x is always 0 and the length must add up to 1 then y must be either 
-	# -1 or 1 or 0 in the case of the ball being perfectly lined up with the 
-	# paddle
-	assert(abs(resulting_direction.y) == 1 || resulting_direction.y == 0)
+	var resulting_direction: Vector2 =                                         \
+	Vector2(0, 1 if ball_y_position > paddle_y_position else -1)
 	
 	return resulting_direction
 
@@ -95,7 +91,10 @@ func _ready():
 func _process(delta):
 	# Determine the direction OpponentPaddle should move in.
 	var new_direction = determine_movement_direction()
-	
+		# If the direction is 0 we don't need to do anything and return early.
+	if(new_direction.length_squared() == 0):
+		return
+		
 	# :TODO: Should this be done with signals? hard to determine what is "right"
 	# in this context at the moment.
 	$OpponentPaddle.apply_movement(new_direction)
