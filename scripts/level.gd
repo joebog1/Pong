@@ -39,8 +39,8 @@ func _determine_new_ball_velocity(body, ball) -> Vector2:
 		# :BUG: move_and_slide() changes the linear velocity when a collision 
 		# occurs. What we really want is 
 		# ball.get_last_slide_collision().get_collider_velocity() but ball has 
-		# "lost" is knwolwedge of that as it was passed in as a Node2d, not as a
-		# CharacterBody2D. This means currently the behaviour is trash
+		# "lost" is knowledge of that as it was passed in as a Node2d, not as a
+		# CharacterBody2D. This means currently the behaviour is broken.
 		var result = ball.get_linear_velocity()
 		result.y *= -1
 		return result
