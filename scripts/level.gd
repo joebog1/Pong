@@ -38,6 +38,9 @@ func _determine_new_ball_velocity(body, ball) -> Vector2:
 		#                             |    |
 		#                             |    |
 		#                             ------
+		# :TODO: Probably should rethink this approach, seems a bit too 
+		# sensitive. Consider breaking up the puck into 3 regions with 
+		# predefined linear velocity vectors to apply to the ball on hit.
 		assert(body.get_editor_description() == "Puck")
 		var centre_of_puck = body.get_global_position()
 		var centre_of_ball = $Ball.get_global_position()
@@ -63,6 +66,5 @@ func _ready():
 	$Ball.set_linear_velocity(Vector2(INITAL_BALL_SPEED, 0.0))
 
 func _on_ball_body_entered(body):
-	# :TODO: Do maths here to determine the new body velocity.
 	print(str($Ball.get_linear_velocity()))
 	$Ball.set_linear_velocity(_determine_new_ball_velocity(body, $Ball))
