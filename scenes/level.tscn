@@ -6,15 +6,15 @@
 [ext_resource type="PackedScene" uid="uid://hf0o5ela3mrw" path="res://scenes/ball.tscn" id="3_neeh0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2n5ju"]
-size = Vector2(1166, 162)
+size = Vector2(1153, 162)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xfhdh"]
-size = Vector2(1156, 224)
+size = Vector2(1151, 224)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vgtqa"]
 size = Vector2(20, 349.25)
 
-[sub_resource type="LabelSettings" id="LabelSettings_dxxj8"]
+[sub_resource type="LabelSettings" id="LabelSettings_h7khf"]
 font_size = 32
 font_color = Color(0, 0, 0, 1)
 
@@ -32,14 +32,14 @@ script = ExtResource("1_bdhl3")
 editor_description = "Wall"
 
 [node name="BorderTop" type="CollisionShape2D" parent="BorderTop"]
-position = Vector2(573, -81)
+position = Vector2(577.5, -81)
 shape = SubResource("RectangleShape2D_2n5ju")
 
 [node name="BorderBottom" type="StaticBody2D" parent="."]
 editor_description = "Wall"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BorderBottom"]
-position = Vector2(575, 762)
+position = Vector2(577.5, 762)
 shape = SubResource("RectangleShape2D_xfhdh")
 
 [node name="PlayerPaddle" parent="." instance=ExtResource("1_0hi3e")]
@@ -64,12 +64,12 @@ position = Vector2(-10.5, 163.75)
 shape = SubResource("RectangleShape2D_vgtqa")
 
 [node name="Label" type="Label" parent="PlayerGoal"]
-offset_left = 386.0
-offset_top = 23.0
-offset_right = 489.0
-offset_bottom = 69.0
+offset_left = 426.5
+offset_top = 21.5
+offset_right = 466.5
+offset_bottom = 66.5
 text = "0"
-label_settings = SubResource("LabelSettings_dxxj8")
+label_settings = SubResource("LabelSettings_h7khf")
 
 [node name="OpponentGoal" type="Area2D" parent="."]
 
