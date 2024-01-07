@@ -1,13 +1,13 @@
 [gd_scene load_steps=4 format=3 uid="uid://c0wqold5ye23s"]
 
-[ext_resource type="Script" path="res://scripts/opponent_puck.gd" id="1_gqvel"]
+[ext_resource type="Script" path="res://scripts/opponent_paddle.gd" id="1_je26h"]
 [ext_resource type="Texture2D" uid="uid://1yddjw7g8nr5" path="res://sprites/block.png" id="2_6oduq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jv77f"]
 size = Vector2(12.7, 128)
 
 [node name="OpponentPaddle" type="CharacterBody2D"]
-script = ExtResource("1_gqvel")
+script = ExtResource("1_je26h")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.35, 0)

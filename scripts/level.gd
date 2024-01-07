@@ -4,6 +4,11 @@ const INITAL_BALL_SPEED = 400
 
 var previous_ball_velocity = Vector2(INITAL_BALL_SPEED, 0.0)
 
+# :HACK: Should be const but we don't know the position till _ready is called.
+# since we need it outside of the the scope of just _ready it is declared as a 
+# var here.
+var inital_ball_position = Vector2.ZERO
+
 # Function takes the current ball position and OpponentPaddle and returns a 
 # normalised vector representing direction the OpponentPaddle should move in.
 # This is expected to be a vector with y movement only.
@@ -81,6 +86,7 @@ func _ready():
 	# was done instead of setting it directly here. Seems to work though 
 	# currently.
 	$Ball.set_linear_velocity(previous_ball_velocity)
+	inital_ball_position = $Ball.get_global_position()
 
 func _process(_delta):
 	# Determine the direction OpponentPaddle should move in.
@@ -96,15 +102,39 @@ func _process(_delta):
 func _on_ball_body_entered(body):
 	$Ball.set_linear_velocity(_determine_new_ball_velocity(body, $Ball))
 
-# :TODO: The following signals have duplicated code. Find a way to collate them 
+# This function takes the previous ball collision velocity and generates a 
+# new velocity based off of the x direction of the previous velocity.
+func determine_new_ball_velocity():
+	if(previous_ball_velocity.x < 0):
+		return Vector2(-INITAL_BALL_SPEED, 0)
+	else:
+		return Vector2(INITAL_BALL_SPEED, 0)
+
+func reset_ball_state(new_velocity:Vector2):
+	$Ball.set_global_position(inital_ball_position)
+	
+	# We should ensure that the new ball speed is the same as the inital speed.
+	assert(new_velocity.length() == INITAL_BALL_SPEED)
+	
+	# Velocity of the ball is determined by the direction it was moving at the 
+	# time of reset.
+	$Ball.set_linear_velocity(new_velocity)
+
+
+# :TODO: The following slots have duplicated code. Find a way to collate them 
 # into a base class which handles this automatically. 
-
-func _on_opponent_goal_area_entered(area):
+func _on_opponent_goal_body_entered(_area):
 	#:TODO: Find a way of updating the goal without relying on the level scene's
 	# knowledge of the node from the context that this method was called.
-	$OpponentGoal/Label.set_text(int($OpponentGoal/Label.get_text()) + 1) 
+	var old_score = $OpponentGoal/Label.get_text().to_int()
+	print(inital_ball_position)
+	$OpponentGoal/Label.set_text(str(old_score + 1))
+	reset_ball_state(determine_new_ball_velocity())
 
-func _on_player_goal_area_entered(area):
+func _on_player_goal_body_entered(_area):
 	#:TODO: Find a way of updating the goal without relying on the level scene's
 	# knowledge of the node from the context that this method was called.
-	$PlayerGoal/Label.set_text(int($PlayerGoal/Label.get_text()) + 1)
+	var old_score = $PlayerGoal/Label.get_text().to_int()
+	print(inital_ball_position)
+	$PlayerGoal/Label.set_text(str(old_score + 1))
+	reset_ball_state(determine_new_ball_velocity())

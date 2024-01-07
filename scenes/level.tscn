@@ -44,17 +44,14 @@ shape = SubResource("RectangleShape2D_xfhdh")
 
 [node name="PlayerPaddle" parent="." instance=ExtResource("1_0hi3e")]
 editor_description = "Paddle"
-position = Vector2(50, 250)
+position = Vector2(50, 325)
 platform_on_leave = 2
 
 [node name="OpponentPaddle" parent="." instance=ExtResource("2_vhd1g")]
 editor_description = "Paddle"
-position = Vector2(1090, 250)
+position = Vector2(1090, 325)
 motion_mode = 1
 platform_on_leave = 2
-
-[node name="Ball" parent="." instance=ExtResource("3_neeh0")]
-position = Vector2(584, 250)
 
 [node name="PlayerGoal" type="Area2D" parent="."]
 scale = Vector2(2, 2)
@@ -64,10 +61,10 @@ position = Vector2(-10.5, 163.75)
 shape = SubResource("RectangleShape2D_vgtqa")
 
 [node name="Label" type="Label" parent="PlayerGoal"]
-offset_left = 426.5
-offset_top = 21.5
-offset_right = 466.5
-offset_bottom = 66.5
+offset_left = 427.0
+offset_top = 22.0
+offset_right = 534.0
+offset_bottom = 67.0
 text = "0"
 label_settings = SubResource("LabelSettings_h7khf")
 
@@ -85,4 +82,9 @@ offset_bottom = 165.0
 text = "0"
 label_settings = SubResource("LabelSettings_shic8")
 
+[node name="Ball" parent="." instance=ExtResource("3_neeh0")]
+position = Vector2(584, 325)
+
+[connection signal="body_entered" from="PlayerGoal" to="." method="_on_player_goal_body_entered"]
+[connection signal="body_entered" from="OpponentGoal" to="." method="_on_opponent_goal_body_entered"]
 [connection signal="body_entered" from="Ball" to="." method="_on_ball_body_entered"]

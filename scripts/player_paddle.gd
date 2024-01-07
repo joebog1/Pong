@@ -3,7 +3,7 @@ extends CharacterBody2D
 # :TODO: There are some duplication with the PlayerPaddle and OpponentPaddle 
 # nodes.
 
-const BASE_SPEED = 300.0
+const BASE_SPEED = 200.0
 # Enum represents the direction the Runner is facing.
 
 func _physics_process(_delta):
