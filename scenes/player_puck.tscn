@@ -6,7 +6,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qtdni"]
 size = Vector2(25, 256)
 
-[node name="PlayerPuck" type="CharacterBody2D"]
+[node name="PlayerPaddle" type="CharacterBody2D"]
 motion_mode = 1
 script = ExtResource("1_lo5aw")
 

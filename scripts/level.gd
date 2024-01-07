@@ -13,7 +13,7 @@ func determine_movement_direction():
 	var paddle_y_position = $OpponentPaddle.get_global_position().y
 	if(ball_y_position == paddle_y_position): return Vector2(0,0)
 	
-	var resulting_direction: Vector2 =                                         \
+	var resulting_direction =                                                  \
 	Vector2(0, 1 if ball_y_position > paddle_y_position else -1)
 	
 	return resulting_direction
@@ -61,8 +61,8 @@ func _determine_new_ball_velocity(body, ball) -> Vector2:
 		#                             |    |
 		#                             ------
 		# :TODO: Probably should rethink this approach, seems a bit too 
-		# sensitive. Consider breaking up the paddle into 3 regions with 
-		# predefined linear velocity vectors to apply to the ball on hit.
+		# sensitive on testing. Consider breaking up the paddle into 3 regions 
+		# with predefined linear velocity vectors to apply to the ball on hit.
 		
 		assert(body.get_editor_description() == "Paddle")
 		var centre_of_puck = body.get_global_position()
@@ -91,12 +91,12 @@ func _ready():
 func _process(delta):
 	# Determine the direction OpponentPaddle should move in.
 	var new_direction = determine_movement_direction()
-		# If the direction is 0 we don't need to do anything and return early.
+	# If the direction is 0 we don't need to do anything and return early.
 	if(new_direction.length_squared() == 0):
 		return
 		
 	# :TODO: Should this be done with signals? hard to determine what is "right"
-	# in this context at the moment.
+	# in this context at the moment. Consult style guide
 	$OpponentPaddle.apply_movement(new_direction)
 	
 func _on_ball_body_entered(body):

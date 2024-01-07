@@ -6,7 +6,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ortnu"]
 size = Vector2(25, 256)
 
-[node name="OpponentPuck" type="CharacterBody2D"]
+[node name="OpponentPaddle" type="CharacterBody2D"]
 script = ExtResource("1_gqvel")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
