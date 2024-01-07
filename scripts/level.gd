@@ -2,15 +2,17 @@ extends Node2D
 
 const INITAL_BALL_SPEED = 400
 
+var previous_ball_velocity = Vector2(INITAL_BALL_SPEED, 0.0)
+
 # Function takes the current ball position and OpponentPaddle and returns a 
 # normalised vector representing direction the OpponentPaddle should move in.
 # This is expected to be a vector with y movement only.
 # In the case the OpponentPaddle is perfectly lined up with the ball, (0,0) is 
 # returned.
-func determine_movement_direction():
+func determine_movement_direction(ball, paddle):
 	# Take the current y positions of the Ball and OpponentPaddle
-	var ball_y_position = $Ball.get_global_position().y
-	var paddle_y_position = $OpponentPaddle.get_global_position().y
+	var ball_y_position = ball.get_global_position().y
+	var paddle_y_position = paddle.get_global_position().y
 	if(ball_y_position == paddle_y_position): return Vector2(0,0)
 	
 	var resulting_direction =                                                  \
@@ -36,14 +38,8 @@ func _determine_new_ball_velocity(body, ball) -> Vector2:
 		#                      Angle A     *      Angle A
 		#      -----------------------------------------------------------
 		
-		# :BUG: move_and_slide() changes the linear velocity when a collision 
-		# occurs. What we really want is 
-		# ball.get_last_slide_collision().get_collider_velocity() but ball has 
-		# "lost" is knowledge of that as it was passed in as a Node2d, not as a
-		# CharacterBody2D. This means currently the behaviour is broken.
-		var result = ball.get_linear_velocity()
-		result.y *= -1
-		return result
+		previous_ball_velocity.y *= -1
+		return previous_ball_velocity
 		
 	else:
 		# The new angle of the ball is not detemrined by the previous angular 
@@ -66,7 +62,7 @@ func _determine_new_ball_velocity(body, ball) -> Vector2:
 		
 		assert(body.get_editor_description() == "Paddle")
 		var centre_of_puck = body.get_global_position()
-		var centre_of_ball = $Ball.get_global_position()
+		var centre_of_ball = ball.get_global_position()
 		print("paddle: " + str(centre_of_puck) + 
 			  " \nball: " + str(centre_of_ball) + "\n")
 			
@@ -75,6 +71,7 @@ func _determine_new_ball_velocity(body, ball) -> Vector2:
 		var difference_vector = centre_of_ball - centre_of_puck
 		var result = difference_vector.normalized() * INITAL_BALL_SPEED
 		print("new ball velocity: " + str(result) + "\n")
+		previous_ball_velocity = result
 		return result
 		
 func _ready():
@@ -86,11 +83,11 @@ func _ready():
 	# :NOTE: Perhaps this would be better if a signal to change the ball speed 
 	# was done instead of setting it directly here. Seems to work though 
 	# currently.
-	$Ball.set_linear_velocity(Vector2(INITAL_BALL_SPEED, 0.0))
+	$Ball.set_linear_velocity(previous_ball_velocity)
 
-func _process(delta):
+func _process(_delta):
 	# Determine the direction OpponentPaddle should move in.
-	var new_direction = determine_movement_direction()
+	var new_direction = determine_movement_direction($Ball, $OpponentPaddle)
 	# If the direction is 0 we don't need to do anything and return early.
 	if(new_direction.length_squared() == 0):
 		return
