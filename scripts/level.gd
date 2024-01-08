@@ -1,5 +1,11 @@
 extends Node2D
 
+# :TODO: Currently this design just shoves everything into the level node script
+# because it's the only place that "knows" about the other nodes and thus can 
+# communicate between them. This results in a bunch of potentially unrelated 
+# code being shoved into one place. It'd be nice if there was a way I can split 
+# this out into several files.
+
 const INITAL_BALL_SPEED = 400
 
 var previous_ball_velocity = Vector2(INITAL_BALL_SPEED, 0.0)
