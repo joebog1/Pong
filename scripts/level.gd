@@ -127,20 +127,25 @@ func reset_ball_state(new_velocity:Vector2):
 	
 # :TODO: The following slots have duplicated code. Find a way to collate them 
 # into a base class which handles this automatically. 
+
+# Updates the provided scoreboard with the provided new_score
+func update_scoreboard(goal: Area2D, new_score):
+	#:TODO: Find a way of updating the goal without relying on the level scene's
+	# knowledge of the node from the context that this method was called.
+	goal.get_node("Label").set_text(new_score)
+
 func _on_opponent_goal_body_entered(_area):
 	#:TODO: Find a way of updating the goal without relying on the level scene's
 	# knowledge of the node from the context that this method was called.
 	var old_score = $OpponentGoal/Label.get_text().to_int()
-	print(inital_ball_position)
-	$OpponentGoal/Label.set_text(str(old_score + 1))
+	update_scoreboard($OpponentGoal, str(old_score + 1))
 	reset_ball_state(determine_new_ball_velocity())
 
 func _on_player_goal_body_entered(_area):
 	#:TODO: Find a way of updating the goal without relying on the level scene's
 	# knowledge of the node from the context that this method was called.
 	var old_score = $PlayerGoal/Label.get_text().to_int()
-	print(inital_ball_position)
-	$PlayerGoal/Label.set_text(str(old_score + 1))
+	update_scoreboard($PlayerGoal, str(old_score + 1))
 	reset_ball_state(determine_new_ball_velocity())
 
 
