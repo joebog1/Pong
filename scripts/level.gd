@@ -106,6 +106,9 @@ func _on_ball_body_entered(body):
 # This function takes the previous ball collision velocity and generates a 
 # new velocity based off of the x direction of the previous velocity.
 func determine_new_ball_velocity():
+	# :TODO: Perhaps we should rely on the caller of the function to know the 
+	# velocity of the ball rather then using the ball's current velocity as a 
+	# deciding factor. 
 	if(previous_ball_velocity.x < 0):
 		return Vector2(-INITAL_BALL_SPEED, 0)
 	else:
