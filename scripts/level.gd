@@ -8,6 +8,9 @@ extends Node2D
 
 const INITAL_BALL_SPEED = 400
 
+# :TODO: Subject to change
+const SCORE_TO_WIN = 3
+
 var previous_ball_velocity = Vector2(INITAL_BALL_SPEED, 0.0)
 
 # :HACK: Should be const but we don't know the position till _ready is called.
@@ -143,20 +146,52 @@ func update_scoreboard(goal: Area2D, new_score):
 	# knowledge of the node from the context that this method was called.
 	goal.get_node("Label").set_text(new_score)
 
+# Function should be called when either player wins. Hides all nodes on the 
+# screen and presents the winners name. 
+func play_win(winner_name: String):
+	# Hide all children of Level
+	for child in get_children():
+		child.visible = false
+	$FinishLabel.visible = true
+	$FinishLabel.text = winner_name + " wins!"
+	# Show button that resets the game
+	$Button.visible = true
+	
+func reset_score():
+	$PlayerGoal/Label.set_text("0")
+	$OpponentGoal/Label.set_text("0")
+	
 func _on_opponent_goal_body_entered(_area):
 	#:TODO: Find a way of updating the goal without relying on the level scene's
 	# knowledge of the node from the context that this method was called.
-	var old_score = $OpponentGoal/Label.get_text().to_int()
-	update_scoreboard($OpponentGoal, str(old_score + 1))
+	var new_score = $OpponentGoal/Label.get_text().to_int() + 1
+	update_scoreboard($OpponentGoal, str(new_score))
+	if(new_score >= SCORE_TO_WIN):
+		play_win("Player")
+		return
 	reset_ball_state(determine_new_ball_velocity())
 
 func _on_player_goal_body_entered(_area):
 	#:TODO: Find a way of updating the goal without relying on the level scene's
 	# knowledge of the node from the context that this method was called.
-	var old_score = $PlayerGoal/Label.get_text().to_int()
-	update_scoreboard($PlayerGoal, str(old_score + 1))
+	var new_score = $PlayerGoal/Label.get_text().to_int() + 1
+	update_scoreboard($PlayerGoal, str(new_score))
+	if(new_score >= SCORE_TO_WIN):
+		play_win("AI")
+		return
 	reset_ball_state(determine_new_ball_velocity())
-
 
 func _on_timer_timeout():
 	$Ball.set_global_position(inital_ball_position)
+
+func _on_button_pressed():
+	for child in get_children():
+		child.visible = true
+	$Button.visible = false
+	$FinishLabel.visible = false
+	
+	reset_score()
+	
+	reset_ball_state(Vector2(INITAL_BALL_SPEED, 0))
+	
+	# :TODO: Reset the paddle positions.

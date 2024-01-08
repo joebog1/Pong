@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://c8etripyub0tc"]
+[gd_scene load_steps=12 format=3 uid="uid://c8etripyub0tc"]
 
 [ext_resource type="PackedScene" uid="uid://b7fqb1ceiksnq" path="res://scenes/player_paddle.tscn" id="1_0hi3e"]
 [ext_resource type="Script" path="res://scripts/level.gd" id="1_bdhl3"]
@@ -21,6 +21,10 @@ font_color = Color(0, 0, 0, 1)
 size = Vector2(58.5, 705)
 
 [sub_resource type="LabelSettings" id="LabelSettings_shic8"]
+font_size = 32
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_3nd0h"]
 font_size = 32
 font_color = Color(0, 0, 0, 1)
 
@@ -86,7 +90,24 @@ position = Vector2(584, 325)
 
 [node name="Timer" type="Timer" parent="Ball"]
 
+[node name="FinishLabel" type="Label" parent="."]
+visible = false
+offset_left = 491.0
+offset_top = 107.0
+offset_right = 798.0
+offset_bottom = 220.0
+label_settings = SubResource("LabelSettings_3nd0h")
+
+[node name="Button" type="Button" parent="."]
+visible = false
+offset_left = 449.0
+offset_top = 282.0
+offset_right = 715.0
+offset_bottom = 366.0
+text = "New Game?"
+
 [connection signal="body_entered" from="PlayerGoal" to="." method="_on_player_goal_body_entered"]
 [connection signal="body_entered" from="OpponentGoal" to="." method="_on_opponent_goal_body_entered"]
 [connection signal="body_entered" from="Ball" to="." method="_on_ball_body_entered"]
 [connection signal="timeout" from="Ball/Timer" to="." method="_on_timer_timeout"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
